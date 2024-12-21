@@ -1,11 +1,17 @@
 import { Router } from "express";
-// import {prodManager} from '../managers/product.manager.js';
+import { productManager } from '../managers/productManager.js';
 
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
+    try {
+        const productos = await productManager.obtenerProductos();
+        res.status(200).json(productos);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 
-    res.send('productos');
+    
 });
 
 export default router;
