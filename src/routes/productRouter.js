@@ -8,9 +8,15 @@ router.get("/", async (req, res) => {
         // filtrar por marca
         let { marca, color, category, gender } = req.query;
 
-        if (marca || color) {
+        if (category || gender || marca || color) {
             let productosFiltrados = await productManager.getProducts(); // valor inicial: todos los productos
 
+            if (gender) {
+                productosFiltrados = await productManager.filterByGender(productosFiltrados, gender);
+            }
+            if (category) {
+                productosFiltrados = await productManager.filterByCategory(productosFiltrados, category);
+            }
             if (marca) {
                 productosFiltrados = await productManager.filterByMarca(productosFiltrados, marca);
             }
@@ -20,14 +26,6 @@ router.get("/", async (req, res) => {
             return res.status(200).json(productosFiltrados);
         }
 
-        // if (category) {
-        //     const productosFiltrados = await productManager.filterByCategory(category);
-        //     return res.status(200).json(productosFiltrados);
-        // }
-        // if (gender) {
-        //     const productosFiltrados = await productManager.filterByGender(gender);
-        //     return res.status(200).json(productosFiltrados);
-        // }
         const productos = await productManager.getProducts();
         res.status(200).json(productos);
     } catch (err) {

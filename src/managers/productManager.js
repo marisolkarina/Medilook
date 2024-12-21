@@ -72,12 +72,36 @@ class ProductManager {
         }
     }
 
+    async filterByGender(productos, gender) {
+        try {
+            const productosFiltrados = productos.filter(prod =>
+                prod.gender.toLowerCase() === gender.toLowerCase()
+            );
+            if (productosFiltrados.length === 0) throw new Error("No hay productos con los filtros indicados.");
+            return productosFiltrados;
+        } catch (err) {
+            throw new Error(err.message);
+        }
+    }
+
+    async filterByCategory(productos, category) {
+        try {
+            const productosFiltrados = productos.filter(prod =>
+                prod.category.toLowerCase() === category.toLowerCase()
+            );
+            if (productosFiltrados.length === 0) throw new Error("No hay productos con los filtros indicados.");
+            return productosFiltrados;
+        } catch (err) {
+            throw new Error(err.message);
+        }
+    }
+
     async filterByMarca(productos, marca) {
         try {
             const productosFiltrados = productos.filter(prod =>
                 prod.marca.toLowerCase() === marca.toLowerCase()
             );
-            if (productosFiltrados.length === 0) throw new Error("No existe la marca.");
+            if (productosFiltrados.length === 0) throw new Error("No hay productos con los filtros indicados.");
             return productosFiltrados;
         } catch (err) {
             throw new Error(err.message);
@@ -89,7 +113,7 @@ class ProductManager {
             const productosFiltrados = productos.filter(prod =>
                 prod.color.toLowerCase() === color.toLowerCase()
             );
-            if (productosFiltrados.length === 0) throw new Error("No existe el color.");
+            if (productosFiltrados.length === 0) throw new Error("No hay productos con los filtros indicados.");
             return productosFiltrados;
         } catch (err) {
             throw new Error(err.message);
