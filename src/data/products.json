@@ -1,5 +1,1 @@
-[
-    {
-        "title": "chaqueta"
-    }
-]
+[{"id":"0a42b7894b8d2f5a43d1","title":"Chaqueta EstampadaEL602","description":"Una blusa cruzada de corte moderno y clásico presenta dos bolsillos de parche delanteros, costuras princesa delanteras y traseras y aberturas laterales. Longitud del centro de la espalda: 26 ","code":"EL602","price":115,"status":true,"stock":10,"category":"chaqueta","gender":"F","marca":"Elle","color":"azul"},{"id":"6843af7748d0da07340b","title":"Chaqueta WW610","description":"Un top cruzado de corte moderno y clásico presenta yugos delanteros en los hombros, dos bolsillos de parche, presilla para instrumentos, etiqueta con el logo con presilla elástica, costuras estilo princesa en la parte delantera y trasera y aberturas laterales. Longitud del centro de la espalda: 26","code":"WW610","price":110,"status":true,"stock":10,"category":"chaqueta","gender":"F","marca":"Cherokee","color":"blanco"}]
