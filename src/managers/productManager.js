@@ -72,6 +72,30 @@ class ProductManager {
         }
     }
 
+    async filterByMarca(productos, marca) {
+        try {
+            const productosFiltrados = productos.filter(prod =>
+                prod.marca.toLowerCase() === marca.toLowerCase()
+            );
+            if (productosFiltrados.length === 0) throw new Error("No existe la marca.");
+            return productosFiltrados;
+        } catch (err) {
+            throw new Error(err.message);
+        }
+    }
+
+    async filterByColor(productos, color) {
+        try {
+            const productosFiltrados = productos.filter(prod =>
+                prod.color.toLowerCase() === color.toLowerCase()
+            );
+            if (productosFiltrados.length === 0) throw new Error("No existe el color.");
+            return productosFiltrados;
+        } catch (err) {
+            throw new Error(err.message);
+        }
+    }
+
 
 }
 

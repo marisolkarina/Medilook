@@ -5,12 +5,37 @@ const router = Router();
 
 router.get("/", async (req, res) => {
     try {
+        // filtrar por marca
+        let { marca, color, category, gender } = req.query;
+
+        if (marca || color) {
+            let productosFiltrados = await productManager.getProducts(); // valor inicial: todos los productos
+
+            if (marca) {
+                productosFiltrados = await productManager.filterByMarca(productosFiltrados, marca);
+            }
+            if (color) {
+                productosFiltrados = await productManager.filterByColor(productosFiltrados, color);
+            }
+            return res.status(200).json(productosFiltrados);
+        }
+
+        // if (category) {
+        //     const productosFiltrados = await productManager.filterByCategory(category);
+        //     return res.status(200).json(productosFiltrados);
+        // }
+        // if (gender) {
+        //     const productosFiltrados = await productManager.filterByGender(gender);
+        //     return res.status(200).json(productosFiltrados);
+        // }
         const productos = await productManager.getProducts();
         res.status(200).json(productos);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
+
+
 
 router.get("/:pid", async (req, res) => {
     try {
@@ -31,26 +56,28 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.put("/:pid", async (req, res) => {
-    try {
-        const { pid } = req.params;
-        const prodAct = await productManager.update(req.body, pid);
-        res.status(200).json(prodAct);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-
 router.delete("/:pid", async (req, res) => {
     try {
         const { pid } = req.params;
         const prodEliminar = await productManager.delete(pid);
         res.status(200).json({ message: `el producto con id: ${prodEliminar.id} ha sido eliminado` });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
+
+
+router.put("/:pid", async (req, res) => {
+    try {
+        const { pid } = req.params;
+        const prodAct = await productManager.update(req.body, pid);
+        res.status(200).json(prodAct);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
 
 
 export default router;
