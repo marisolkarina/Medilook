@@ -5,10 +5,11 @@ const router = Router();
 
 router.get("/", async (req, res) => {
     try {
-        let { gender, category, marca, color } = req.query;
+        let { gender, category, marca, color, order } = req.query;
         // filtra productos por category, marca,color, gender en caso sea necesario
-        if (category || gender || marca || color) {
-           const productosFiltrados = await productManager.filterProducts(gender, category, marca, color);
+        // tambien puede ordenar
+        if (category || gender || marca || color || order) {
+           const productosFiltrados = await productManager.filterProducts(gender, category, marca, color, order);
            return res.status(200).json(productosFiltrados);
         }
 

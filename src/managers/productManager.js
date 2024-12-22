@@ -72,16 +72,7 @@ class ProductManager {
         }
     }
 
-    async alphabeticOrder(productos, color) {
-        try {
-            const productosOrdenados = productos.sort((prod1, prod2) => prod1.nombre.localeCompare(prod2.nombre));
-            return productosOrdenados;
-        } catch (err) {
-            throw new Error(err.message);
-        }
-    }
-
-    async filterProducts(gender, category, marca, color) {
+    async filterProducts(gender, category, marca, color, order) {
         try {
             const productos = await this.getProducts();
             let productosFiltrados =  productos;// valor inicial: todos los productos
@@ -98,6 +89,15 @@ class ProductManager {
             if (color) {
                 productosFiltrados = productosFiltrados.filter(prod => prod.color.toLowerCase() === color.toLowerCase());
             }
+            if (order) {
+                if (order === 'alfabeticamente') {
+                    productosFiltrados = productosFiltrados.sort((prod1, prod2) => prod1.title.localeCompare(prod2.title));
+                } else if (order === 'precio-ascendente') {
+                    productosFiltrados = productosFiltrados.sort((prod1, prod2) => prod1.price - prod2.price);
+                } else if (order === 'precio-descendente') {
+                    productosFiltrados = productosFiltrados.sort((prod1, prod2) => prod2.price - prod1.price);
+                }
+            }
 
             if (productosFiltrados.length === 0) throw new Error("No hay productos con los filtros indicados.");
             return productosFiltrados;
@@ -106,8 +106,8 @@ class ProductManager {
             throw new Error(err.message);
         }
     }
-
-
 }
+
+
 
 export const productManager = new ProductManager(path.join(process.cwd(), "src/data/products.json"));
