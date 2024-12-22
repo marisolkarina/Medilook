@@ -72,49 +72,36 @@ class ProductManager {
         }
     }
 
-    async filterByGender(productos, gender) {
+    async alphabeticOrder(productos, color) {
         try {
-            const productosFiltrados = productos.filter(prod =>
-                prod.gender.toLowerCase() === gender.toLowerCase()
-            );
-            if (productosFiltrados.length === 0) throw new Error("No hay productos con los filtros indicados.");
-            return productosFiltrados;
+            const productosOrdenados = productos.sort((prod1, prod2) => prod1.nombre.localeCompare(prod2.nombre));
+            return productosOrdenados;
         } catch (err) {
             throw new Error(err.message);
         }
     }
 
-    async filterByCategory(productos, category) {
+    async filterProducts(gender, category, marca, color) {
         try {
-            const productosFiltrados = productos.filter(prod =>
-                prod.category.toLowerCase() === category.toLowerCase()
-            );
-            if (productosFiltrados.length === 0) throw new Error("No hay productos con los filtros indicados.");
-            return productosFiltrados;
-        } catch (err) {
-            throw new Error(err.message);
-        }
-    }
+            const productos = await this.getProducts();
+            let productosFiltrados =  productos;// valor inicial: todos los productos
 
-    async filterByMarca(productos, marca) {
-        try {
-            const productosFiltrados = productos.filter(prod =>
-                prod.marca.toLowerCase() === marca.toLowerCase()
-            );
-            if (productosFiltrados.length === 0) throw new Error("No hay productos con los filtros indicados.");
-            return productosFiltrados;
-        } catch (err) {
-            throw new Error(err.message);
-        }
-    }
+            if (gender) {
+                productosFiltrados = productosFiltrados.filter(prod => prod.gender.toLowerCase() === gender.toLowerCase());
+            }
+            if (category) {
+                productosFiltrados = productosFiltrados.filter(prod => prod.category.toLowerCase() === category.toLowerCase());
+            }
+            if (marca) {
+                productosFiltrados = productosFiltrados.filter(prod => prod.marca.toLowerCase() === marca.toLowerCase());
+            }
+            if (color) {
+                productosFiltrados = productosFiltrados.filter(prod => prod.color.toLowerCase() === color.toLowerCase());
+            }
 
-    async filterByColor(productos, color) {
-        try {
-            const productosFiltrados = productos.filter(prod =>
-                prod.color.toLowerCase() === color.toLowerCase()
-            );
             if (productosFiltrados.length === 0) throw new Error("No hay productos con los filtros indicados.");
             return productosFiltrados;
+
         } catch (err) {
             throw new Error(err.message);
         }
