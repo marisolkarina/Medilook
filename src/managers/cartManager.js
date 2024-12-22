@@ -46,7 +46,7 @@ class CartManager {
         }
     }
 
-    async addProductToCart(cid, pid) {
+    async addProductToCart(cid, pid, quantityProd) {
         try {
             const productoAgregar = await productManager.getProductById(pid);
             if (!productoAgregar) throw new Error('producto no existe');
@@ -60,23 +60,19 @@ class CartManager {
 
             //Obtenenmos precio unitario del producto
             let precioProd = productoAgregar.price;
-            // let cantidadProd;
+
             if (!prodExistenteEnCarrito) {
                 const producto = {
                     id: pid,
                     quantity: 1
                 }
                 carritoExistente.items.push(producto);
-
-                // cantidadProd = producto.quantity;
-                
             } else {
-                prodExistenteEnCarrito.quantity += 1;
-                // cantidadProd = prodExistenteEnCarrito.quantity;
+                prodExistenteEnCarrito.quantity += parseInt(quantityProd);
             }
 
             //Actualizamos el precio total del carrito
-            carritoExistente.precioTotal += precioProd;
+            carritoExistente.precioTotal += precioProd*parseInt(quantityProd);
 
             const carritosActualizados = carritos.map((cart) => {
                 if (cart.id === cid) {
