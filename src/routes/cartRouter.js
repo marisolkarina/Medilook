@@ -30,7 +30,7 @@ router.get("/:cid", async (req, res) => {
     }
 });
 
-//En la url se puede indicar la cantidad que desea añadir del producto
+//En la url se puede indicar la cantidad que desea añadir del producto (opcional)
 //     ejm:        /api/carts/20c22c05e88b62486a85/producto/2c104551a5abcb0a6f4b?quantity=2
 router.post("/:cid/producto/:pid", async (req, res) => {
     try {
@@ -38,7 +38,14 @@ router.post("/:cid/producto/:pid", async (req, res) => {
         const { cid } = req.params;
         const { quantity } = req.query;
 
-        const response = await cartManager.addProductToCart(cid, pid, quantity);
+        let qp;
+        if (quantity) {
+            qp = quantity;
+        } else { // si no indica cantidad en la url se asume 1
+            qp = 1;
+        }
+
+        const response = await cartManager.addProductToCart(cid, pid, qp);
         res.json(response);
     } catch (error) {
         res.status(500).json({ message: error.message });
