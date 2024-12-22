@@ -108,6 +108,4 @@ class ProductManager {
     }
 }
 
-
-
 export const productManager = new ProductManager(path.join(process.cwd(), "src/data/products.json"));
